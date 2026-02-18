@@ -4,80 +4,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thyroid Cancer Detection | ProHealth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <title>ThyroCheck AI | Advanced Thyroid Diagnostics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/static/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <i class="fas fa-heartbeat"></i>
+            <i class="fas fa-microscope"></i>
             <span>ThyroCheck AI</span>
         </div>
         <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Contact</a>
+            <a href="#home">Dashboard</a>
+            <a href="#analysis">Analysis</a>
+            <a href="#about">Research</a>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>Professional Thyroid <br>Health Analysis</h1>
-            <p>Advanced AI-powered detection for thyroid nodules. Upload your ultrasound or pathology image for instant
-                analysis and interpretability reports.</p>
+    <main>
+        <section class="hero" id="home">
+            <h1>Precision Thyroid <br>Diagnostics</h1>
+            <p>Empowering clinicians with Fibonacci-scaled neural networks for deep thyroid nodule analysis.</p>
 
-            <form id="uploadForm">
-                <div class="upload-btn-wrapper">
-                    <button class="btn">Upload Image</button>
-                    <input type="file" name="file" id="fileInput" accept=".png, .jpg, .jpeg">
+            <div class="dz-container">
+                <div class="drop-zone" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt dz-icon"></i>
+                    <p class="dz-text">Drag & Drop medical image</p>
+                    <p class="dz-subtext">Supports DICOM, JPEG, PNG (Max 10MB)</p>
+                    <input type="file" id="fileInput" accept="image/*">
                 </div>
-            </form>
-            <div id="fileName" style="margin-top: 10px; font-style: italic; color: #555;"></div>
-            <div class="loader" id="loader"></div>
-            <div id="errorMsg" style="color: red; margin-top: 10px;"></div>
-        </div>
-    </section>
-
-    <section class="results-section" id="resultsSection" style="display: none;">
-        <h2>Analysis Results</h2>
-        <p>AI Interpretation of the uploaded medical image.</p>
-
-        <div class="results-grid">
-            <div class="card">
-                <h3>Original Image</h3>
-                <img id="originalImg" src="" alt="Original">
-                <div class="metric"><span>Scan Type:</span><span>Ultrasound</span></div>
+                <div class="medical-loader" id="loader"></div>
             </div>
+        </section>
 
-            <div class="card">
-                <h3>Prediction</h3>
-                <div class="metric" style="margin-top: 20px; font-size: 1.2rem;">
-                    <span id="predLabel" style="font-weight: 700; color: #00bfa5;">-</span>
+        <section class="results-section" id="resultsSection">
+            <h2 class="section-title">Diagnostic Insight</h2>
+
+            <div class="results-grid">
+                <!-- Original Scan -->
+                <div class="card">
+                    <h3>Raw Scan</h3>
+                    <img id="originalImg" src="" alt="Medical Scan">
+                    <div class="metrics-display" style="margin-top: 1.5rem;">
+                        <div class="metric-box">
+                            <p class="metric-label">Source</p>
+                            <p class="metric-value">Ultrasound / Pathology</p>
+                        </div>
+                    </div>
                 </div>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <div class="metric"><span>Confidence Score:</span><span id="confScore">-</span></div>
-                <div class="metric"><span>Confidence %:</span><span id="confPercent">-</span></div>
-                <div class="metric"><span>Class ID:</span><span id="classId">-</span></div>
+
+                <!-- AI Analysis -->
+                <div class="card">
+                    <h3>AI Classification</h3>
+                    <div class="metrics-display">
+                        <div class="prediction-badge" id="predBadge">Analyzing...</div>
+                        
+                        <div class="metric-box">
+                            <p class="metric-label">Confidence Probability</p>
+                            <p class="metric-value" id="confPercent">0.00%</p>
+                        </div>
+
+                        <div class="metric-box">
+                            <p class="metric-label">Network Class ID</p>
+                            <p class="metric-value" id="classId">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Heatmap -->
+                <div class="card">
+                    <h3>Grad-CAM Attention</h3>
+                    <img id="gradcamImg" src="" alt="Attention Heatmap">
+                    <div class="metrics-display" style="margin-top: 1.5rem;">
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5;">
+                            Bright regions highlight diagnostic focus areas utilized by the FibonacciNet for its final determination.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>AI Interpretability</h3>
-                <img id="gradcamImg" src="" alt="Heatmap">
-                <p style="font-size: 0.9rem; color: #666;">
-                    <i class="fas fa-info-circle"></i> Warmer colors indicate regions the AI focused on.
-                </p>
-            </div>
-        </div>
+            <button class="btn-primary" id="downloadBtn">
+                <i class="fas fa-file-pdf"></i>
+                Generate Clinical Report
+            </button>
+        </section>
+    </main>
 
-        <button class="btn download-btn" id="downloadBtn" style="display: none;">
-            <i class="fas fa-file-download"></i> Download Full Report (DOCX)
-        </button>
-    </section>
+    <div class="alert" id="customAlert"></div>
 
     <script src="/static/app.js"></script>
 </body>
