@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thyroid Cancer Detection | ProHealth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>ThyroCheck AI</span>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Professional Thyroid <br>Health Analysis</h1>
+            <p>Advanced AI-powered detection for thyroid nodules. Upload your ultrasound or pathology image for instant
+                analysis and interpretability reports.</p>
+
+            <form id="uploadForm">
+                <div class="upload-btn-wrapper">
+                    <button class="btn">Upload Image</button>
+                    <input type="file" name="file" id="fileInput" accept=".png, .jpg, .jpeg">
+                </div>
+            </form>
+            <div id="fileName" style="margin-top: 10px; font-style: italic; color: #555;"></div>
+            <div class="loader" id="loader"></div>
+            <div id="errorMsg" style="color: red; margin-top: 10px;"></div>
+        </div>
+    </section>
+
+    <section class="results-section" id="resultsSection" style="display: none;">
+        <h2>Analysis Results</h2>
+        <p>AI Interpretation of the uploaded medical image.</p>
+
+        <div class="results-grid">
+            <div class="card">
+                <h3>Original Image</h3>
+                <img id="originalImg" src="" alt="Original">
+                <div class="metric"><span>Scan Type:</span><span>Ultrasound</span></div>
+            </div>
+
+            <div class="card">
+                <h3>Prediction</h3>
+                <div class="metric" style="margin-top: 20px; font-size: 1.2rem;">
+                    <span id="predLabel" style="font-weight: 700; color: #00bfa5;">-</span>
+                </div>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <div class="metric"><span>Confidence Score:</span><span id="confScore">-</span></div>
+                <div class="metric"><span>Confidence %:</span><span id="confPercent">-</span></div>
+                <div class="metric"><span>Class ID:</span><span id="classId">-</span></div>
+            </div>
+
+            <div class="card">
+                <h3>AI Interpretability</h3>
+                <img id="gradcamImg" src="" alt="Heatmap">
+                <p style="font-size: 0.9rem; color: #666;">
+                    <i class="fas fa-info-circle"></i> Warmer colors indicate regions the AI focused on.
+                </p>
+            </div>
+        </div>
+
+        <button class="btn download-btn" id="downloadBtn" style="display: none;">
+            <i class="fas fa-file-download"></i> Download Full Report (DOCX)
+        </button>
+    </section>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
